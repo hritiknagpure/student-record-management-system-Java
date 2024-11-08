@@ -4,45 +4,46 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 
-public class Jdbc_insert {
+public class Jdbc_Insert {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "scott", "tiger");
-			PreparedStatement psmt = con.prepareStatement("insert into empp values(?,?,?)");
+			
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/yourDatabaseName", "root", "@hritik");
+			PreparedStatement psmt = con.prepareStatement("INSERT INTO empp VALUES (?, ?, ?)");
 			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+			
 			while (true) {
-//				empid
-				System.out.print("enter Emp No: ");
+				System.out.print("Enter Emp No: ");
 				int eno = Integer.parseInt(br.readLine());
-//				ename
-				System.out.print("enter Emp Ename: ");
+				System.out.print("Enter Emp Name: ");
 				String ename = br.readLine();
-//				salary
-				System.out.print("enter Emp sal: ");
+				System.out.print("Enter Emp Salary: ");
 				double esal = Double.parseDouble(br.readLine());
+				
 				psmt.setInt(1, eno);
 				psmt.setString(2, ename);
 				psmt.setDouble(3, esal);
 				int count = psmt.executeUpdate();
+				
 				if (count > 0) 
 					System.out.println(count + " record inserted");
 				else 
-					System.out.println("no record inserted");
-					System.out.println("do you want to moree records.[yes/no]");
-					String ch=br.readLine();
-					if(ch.equalsIgnoreCase("no"))
-					break;
+					System.out.println("No record inserted");
 				
+				System.out.print("Do you want to insert more records? [yes/no]: ");
+				String ch = br.readLine();
+				
+				// Exit loop if the user enters "no"
+				if (ch.equalsIgnoreCase("no"))
+					break;
 			}
-
+			
+			// Close the connection
+			con.close();
 		} catch (Exception e) {
-			// TODO: handle exception
 			System.out.print(e);
 		}
-
 	}
-
 }
