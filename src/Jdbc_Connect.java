@@ -6,19 +6,15 @@ public class Jdbc_Connect {
 
 	public static void main(String[] args) {
 		try {
-			Class.forName("oracle.jdbc.driver.OracleDriver");
-			Connection con=DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl","scott","tiger");
-			Statement smt=con.createStatement();
-			smt.executeUpdate("create table empp(eno number,ename varchar(12),esal number)");
-			System.out.println("tabel is create succesfully");
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/MYSQL", "root", "@hritik");
+			Statement smt = con.createStatement();
+			smt.executeUpdate("CREATE TABLE empp (eno INT, ename VARCHAR(12), esal DECIMAL(10, 2))");
+			System.out.println("Table is created successfully");
 			con.close();
 		}
 		catch(Exception e) {
 			System.out.print(e);
 		}
-		
-		
-
 	}
-
 }
